@@ -31,6 +31,13 @@ curl --location --request POST 'http://localhost:3030/user' \
 }'
 ```
 
+- Get by Account Number or Identity Number or both
+
+```curl
+curl --location --request GET 'http://localhost:3030/v1/user?accountNumber={optional string}&identityNumber={optional string}' \
+--header 'Authorization: Bearer {jwtToken}'
+```
+
 - Get by Id
 
 ```curl

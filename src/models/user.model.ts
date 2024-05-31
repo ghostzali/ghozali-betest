@@ -24,10 +24,10 @@ export function userView(user: IUserQuery): IUserView {
 
 const schema = new Schema<IUser>(
   {
-    userName: { type: String, required: true, unique: true },
-    accountNumber: { type: String, required: true },
-    emailAddress: { type: String, required: true, unique: true, trim: true, lowercase: true },
-    identityNumber: { type: String, required: true },
+    userName: { type: String, required: true },
+    accountNumber: { type: String, required: true, unique: true },
+    emailAddress: { type: String, required: true, trim: true, lowercase: true },
+    identityNumber: { type: String, required: true, unique: true },
   },
   {
     timestamps: true,
@@ -38,8 +38,8 @@ const schema = new Schema<IUser>(
 );
 
 schema.index({ createdAt: -1 });
-schema.index({ userName: 1, createdAt: -1 });
-schema.index({ emailAddress: 1, createdAt: -1 });
+schema.index({ accountNumber: 1, createdAt: -1 });
+schema.index({ identityNumber: 1, createdAt: -1 });
 schema.index({ identityNumber: 1, accountNumber: 1 });
 
 const User: IUserModel = model<IUser, IUserModel>('User', schema);

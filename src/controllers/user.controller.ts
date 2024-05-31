@@ -11,9 +11,9 @@ export namespace UserController {
     try {
       const { userName, emailAddress, accountNumber, identityNumber } = req.body;
 
-      const existUser = await UserService.findByUserOrEmail(userName, emailAddress);
-      if (existUser.length) {
-        res.status(409).json({ message: `userName or emailAddress already exist!` });
+      const existUser = await UserService.accoutOrIdentityExist(accountNumber, identityNumber);
+      if (existUser) {
+        res.status(409).json({ message: `accountNumber or identityNumber already exist!` });
         return;
       }
 
@@ -30,10 +30,27 @@ export namespace UserController {
     const id = req.params.id;
 
     const user = (await UserService.findOne(id)) as IUser;
-    if (!user) res.status(404).json({ message: 'User not found!' });
+    if (!user) {
+      res.status(404).json({ message: 'User not found!' });
+      return;
+    }
 
     res.status(200).json({
       user,
+    });
+  };
+
+  export const findByAccountOrIdentity: RequestHandler = async (req: AuthenticateRequest, res: Response) => {
+    const { accountNumber, identityNumber } = req.query;
+
+    const user = await UserService.findByAccountOrIdentity(accountNumber as string, identityNumber as string);
+    if (!user.length) {
+      res.status(404).json({ message: 'User not found!' });
+      return;
+    }
+
+    res.status(200).json({
+      user: userView(user[0]),
     });
   };
 

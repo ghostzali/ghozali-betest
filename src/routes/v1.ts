@@ -6,6 +6,7 @@ import { UserController } from '../controllers/user.controller';
 const router = Router();
 
 router.get('/issue-token', AuthController.issue);
+router.get('/user', [authMiddleware], UserController.findByAccountOrIdentity);
 router.post('/user', [authMiddleware], UserController.create);
 router.get('/user/:id', [authMiddleware], UserController.findById);
 router.patch('/user/:id', [authMiddleware], UserController.update);

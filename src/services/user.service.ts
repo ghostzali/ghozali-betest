@@ -45,14 +45,25 @@ export namespace UserService {
     }).lean();
   };
 
-  export const findByUserOrEmail = async (userName: string, emailAddress: string): Promise<IUserQuery[]> => {
+  export const findByAccountOrIdentity = async (
+    accountNumber?: string,
+    identityNumber?: string,
+  ): Promise<IUserQuery[]> => {
     return User.find({
-      $or: [{ emailAddress: emailAddress.toLowerCase() }, { userName }],
+      $or: [{ identityNumber }, { accountNumber }],
     }).lean();
   };
 
   export const exist = async (id: string): Promise<boolean> => {
     const user = await User.exists({ _id: id });
+
+    return !!user;
+  };
+
+  export const accoutOrIdentityExist = async (accountNumber?: string, identityNumber?: string) => {
+    const user = User.exists({
+      $or: [{ identityNumber }, { accountNumber }],
+    });
 
     return !!user;
   };
