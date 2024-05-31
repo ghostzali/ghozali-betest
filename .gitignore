@@ -1,0 +1,16 @@
+## build 
+dist/
+
+## node_modules and libs
+node_modules/
+
+## package-lock
+package-lock.json
+yarn.lock
+
+## visual studio code config
+.vscode/
+/.idea/
+
+# env
+.env
