@@ -2,9 +2,10 @@
   "name": "ms-ghozali-betest",
   "version": "1.0.0",
   "description": "Microservice BE Test - Akhmad Ghozali Amrulloh",
-  "main": "dist/app.js",
+  "main": "dist/server.js",
   "scripts": {
     "build": "tsc && tsc-alias",
+    "start": "node dist/server.js",
     "prettier": "prettier --write \"**/*.ts\"",
     "tslint": "tslint **/*.ts",
     "ts-node": "ts-node src/server.ts",

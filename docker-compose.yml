@@ -1,4 +1,4 @@
-version: ‘3.7'
+version: '3.7'
 
 services:
   zookeeper:
@@ -37,6 +37,28 @@ services:
       - '27017:27017'
     volumes:
       - ms-ghozali_data:/data/db
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: ms-ghozali-betest-app
+    image: ms-ghozali-betest-app
+    restart: unless-stopped
+    depends_on:
+      - zookeeper
+      - kafka
+      - mongo
+    networks:
+      - ms-ghozali-net
+    ports:
+      - '3000:3000'
+    environment:
+      - PORT: 3000
+      - JWT_SECRET: Abcd1234
+      - JWT_TOKEN_TTL: 60
+      - MONGO_CONNECTION_URL: mongodb://mongo:27017/db_ghozali_betest
+      - KAFKA_BROKER: kafka:9092,kafka:29092
+      - KAFKA_CLIENT_ID: kafka_client_id_ghozali_betest
 
 volumes:
   ms-ghozali_data:
